@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — ZeroWallet</title>
+  <style>
+    body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; color: #1d1d1f; }
+    h1 { font-size: 1.8em; margin-bottom: 0.2em; }
+    h2 { font-size: 1.2em; margin-top: 2em; }
+    p, ul { font-size: 0.95em; }
+    .date { color: #888; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Privacy Policy</h1>
+  <p class="date">Last updated: September 17, 2026</p>
+
+  <p>ZeroWallet ("we", "our", or "the app") is a self-custody cryptocurrency wallet. This Privacy Policy explains how we handle your information when you use ZeroWallet.</p>
+
+  <h2>1. We Do NOT Collect Your Private Keys or Mnemonics</h2>
+  <p>ZeroWallet is a <strong>self-custody</strong> wallet. Your private keys, mnemonics (seed phrases), and passwords are generated and stored <strong>exclusively on your device</strong>. They are encrypted (XOR + SHA-256 with a random initialization vector) before being stored locally. We do not have access to them, we cannot recover them for you, and they never leave your device.</p>
+
+  <h2>2. No Account Registration</h2>
+  <p>ZeroWallet does not require you to create an account, provide an email address, or submit any personal information. You can use all core wallet features without identifying yourself.</p>
+
+  <h2>3. What Information Is Stored Locally</h2>
+  <p>The following data is stored solely on your device and is never transmitted to us:</p>
+  <ul>
+    <li>Encrypted private keys and mnemonics</li>
+    <li>Wallet names and preferences you set</li>
+    <li>Transaction history (fetched from public blockchains and cached locally)</li>
+    <li>App settings (language, theme, developer mode)</li>
+  </ul>
+
+  <h2>4. Data You Broadcast to Public Blockchains</h2>
+  <p>When you send a transaction, the transaction data — including your wallet address, the recipient's address, and the amount — is broadcast to the relevant blockchain network. Blockchain transactions are <strong>public and immutable</strong>. This is inherent to how blockchains operate and is not controlled by ZeroWallet.</p>
+
+  <h2>5. Third-Party Services</h2>
+  <p>ZeroWallet interacts with the following third-party services to provide certain features. These services may receive your wallet address or transaction details as necessary to fulfill your requests:</p>
+  <ul>
+    <li><strong>Blockchain RPC Nodes:</strong> Public or user-configured RPC endpoints are used to query blockchain data and broadcast transactions.</li>
+    <li><strong>Decentralized Exchange (DEX) Aggregators:</strong> OKX DEX and Jupiter aggregator APIs receive swap requests. They may receive your wallet address and the transaction parameters required for the swap.</li>
+    <li><strong>Price Feeds:</strong> Price data is fetched from Binance, Bitget, DexScreener, and API Ninjas via a gateway service.</li>
+    <li><strong>WalletConnect:</strong> When you connect to decentralized applications (dApps) via WalletConnect, a connection is established between your device and the dApp. ZeroWallet does not monitor or log these connections.</li>
+  </ul>
+
+  <h2>6. Analytics & Crash Reporting</h2>
+  <p>ZeroWallet does <strong>not</strong> integrate any third-party analytics SDKs (such as Google Analytics, Firebase, or similar). We do not track your in-app behavior, screen views, or feature usage.</p>
+
+  <h2>7. Data Security</h2>
+  <p>We implement the following measures to protect your data on your device:</p>
+  <ul>
+    <li>Mnemonic encryption using XOR with SHA-256 hashed password and random IV</li>
+    <li>Secure memory handling — sensitive key material is held in secure memory regions and zeroed after use</li>
+    <li>Password or biometric confirmation required for sensitive operations (exporting private keys, signing transactions)</li>
+  </ul>
+
+  <h2>8. Children's Privacy</h2>
+  <p>ZeroWallet is not intended for use by individuals under the age of 13. We do not knowingly collect personal information from children.</p>
+
+  <h2>9. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.</p>
+
+  <h2>10. Contact</h2>
+  <p>If you have questions about this Privacy Policy, you can contact us at:</p>
+  <p>Email: <strong>deng.zz@gmail.com</strong></p>
+</body>
+</html>
