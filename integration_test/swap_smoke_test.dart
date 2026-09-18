@@ -12,7 +12,7 @@ class _SmokeMockDexAggregator implements DexAggregator {
   Set<ChainType> get supportedChains => {ChainType.eth};
 
   @override
-  Future<List<DexTokenInfo>> getTokens(ChainType chain) async {
+  Future<List<DexTokenInfo>> getTokens(String chainId) async {
     return [
       const DexTokenInfo(
         address: DexTokenInfo.nativeEthAddress,
