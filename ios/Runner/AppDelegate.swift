@@ -2,9 +2,7 @@ import Flutter
 import UIKit
 
 @main
-@objc class AppDelegate: FlutterAppDelegate, FlutterStreamHandler {
-  private let methodChannelName = "zero/deep_links"
-  private let eventChannelName = "zero/deep_links/events"
+@objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate, FlutterStreamHandler {
   private var eventSink: FlutterEventSink?
   private var pendingLink: String?
 
@@ -12,48 +10,51 @@ import UIKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    if let controller = window?.rootViewController as? FlutterViewController {
-      let methodChannel = FlutterMethodChannel(
-        name: methodChannelName,
-        binaryMessenger: controller.binaryMessenger
-      )
-      methodChannel.setMethodCallHandler { [weak self] call, result in
-        guard let self else {
-          result(nil)
-          return
-        }
-        switch call.method {
-        case "getInitialLink":
-          let link = self.pendingLink
-          self.pendingLink = nil
-          result(link)
-        default:
-          result(FlutterMethodNotImplemented)
-        }
-      }
-
-      let eventChannel = FlutterEventChannel(
-        name: eventChannelName,
-        binaryMessenger: controller.binaryMessenger
-      )
-      eventChannel.setStreamHandler(self)
-    }
-
-    if let url = launchOptions?[.url] as? URL {
-      pendingLink = url.absoluteString
-    }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
-  override func application(
-    _ app: UIApplication,
-    open url: URL,
-    options: [UIApplication.OpenURLOptionsKey: Any] = [:]
-  ) -> Bool {
-    capture(url: url)
-    return super.application(app, open: url, options: options)
+  func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
+    GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+
+    let messenger = engineBridge.applicationRegistrar.messenger()
+
+    // MethodChannel for deep links
+    let methodChannel = FlutterMethodChannel(
+      name: "zero/deep_links",
+      binaryMessenger: messenger
+    )
+    methodChannel.setMethodCallHandler { [weak self] call, result in
+      guard let self else {
+        result(nil)
+        return
+      }
+      switch call.method {
+      case "getInitialLink":
+        let link = self.pendingLink
+        self.pendingLink = nil
+        result(link)
+      default:
+        result(FlutterMethodNotImplemented)
+      }
+    }
+
+    // EventChannel for streaming deep links
+    let eventChannel = FlutterEventChannel(
+      name: "zero/deep_links/events",
+      binaryMessenger: messenger
+    )
+    eventChannel.setStreamHandler(self)
   }
+
+  // MARK: - URL handling (called from SceneDelegate)
+
+  func handleURL(_ url: URL) {
+    let value = url.absoluteString
+    pendingLink = value
+    eventSink?(value)
+  }
+
+  // MARK: - FlutterStreamHandler
 
   func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink)
     -> FlutterError?
@@ -69,11 +70,5 @@ import UIKit
   func onCancel(withArguments arguments: Any?) -> FlutterError? {
     eventSink = nil
     return nil
-  }
-
-  private func capture(url: URL) {
-    let value = url.absoluteString
-    pendingLink = value
-    eventSink?(value)
   }
 }
